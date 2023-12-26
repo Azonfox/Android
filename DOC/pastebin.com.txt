@@ -1,0 +1,339 @@
+https://pastebin.com/raw/wmt3bWEt
+
+#!/bin/bash
+
+# minimal android build system for ubuntu 14.04 LTS 64bit 
+# for 32bit ubuntu you'll need to get 32bit adb
+
+CFG_JAVA_HOME=./bin/jdk
+CFG_ANDROID_HOME=./bin/msdk
+
+CFG_ANDROID_TARGET=android-15
+CFG_ANDROID_BUILD_TOOLS=$CFG_ANDROID_HOME/build-tools/23.0.2
+CFG_ANDROID_TOOLS=$CFG_ANDROID_HOME/tools/android
+CFG_ANDROID_JAR=$CFG_ANDROID_HOME/platforms/$CFG_ANDROID_TARGET/android.jar
+
+CFG_TSA=http://timestamp.comodoca.com/rfc3161
+#CFG_TSA=http://dse200.ncipher.com/TSS/HttpTspServer
+#CFG_TSA=http://tsa.safecreative.org
+#CFG_TSA=http://zeitstempel.dfn.de
+
+case $1 in
+init-keystore)
+	$CFG_JAVA_HOME/bin/keytool -genkeypair -validity 10000 \
+		-dname "CN=company name,
+                OU=organisational unit,
+                 O=organisation,
+                 L=location,
+                 S=state,
+                 C=country code" \
+        -keystore AndroidApp.keystore \
+        -storepass password \
+        -keypass password \
+        -alias AndroidAppKey \
+        -keyalg RSA \
+        -v
+	;;
+init-app)
+	app=${2:-appHelloAndroid}
+	class=${3:-HelloAndroid}
+	package=${4:-org.home.android}
+	path=src/${package//\./\/}
+
+	mkdir -p $app/$path
+	mkdir -p $app/res/drawable
+	mkdir -p $app/res/layout
+	mkdir -p $app/res/values
+	(cat <<XML
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="$package"
+      android:versionCode="1"
+      android:versionName="1.0">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-sdk android:minSdkVersion="2"/>
+
+    <application android:icon="@drawable/logo" 
+                 android:label="@string/appName">
+        <activity android:name="$package.$class" 
+                  android:label="@string/appName">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+XML
+)> $app/AndroidManifest.xml
+
+(cat <<TEXT
+package $package;
+
+import android.app.Activity;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.widget.TextView;
+
+public class $class extends Activity {
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    TextView textView = new TextView(this);
+
+    String text = getResources().getString(R.string.helloText);
+    textView.setText(text);
+
+    setContentView(textView);
+  }
+}
+TEXT
+) > $app/$path/$class.java
+
+(cat <<TEXT
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appName">Android Test Program</string>
+    <string name="helloText">Hello, world!</string>
+</resources>
+TEXT
+) > $app/res/values/strings.xml
+
+(cat <<TEXT
+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
+0q3/ACxJ7zGBDm4YAAAAAElFTkSuQmCC
+TEXT
+)|base64 -d > $app/res/drawable/logo.png
+	;;
+init-lib)
+	app=${2:-libdummy}
+	class=${3:-Dummy}
+	package=${4:-org.home.android}
+	path=src/${package//\./\/}
+	mkdir -p $app/$path
+(cat <<TEXT
+package $package;
+
+public class $class {
+}
+TEXT
+) > $app/$path/$class.java
+	echo > $app/depends
+	;;
+make-cache)
+	(>&2 echo "creating cache into out/cache.gz")
+	mkdir -p out
+    (
+        find bin/jdk/* -name *.jar -print
+        find lib/* -name *.jar -print 2>/dev/null
+        echo $CFG_ANDROID_JAR
+    ) | xargs -n1 jar -tf | grep '\.class$' | sed 's/\.class$//' | sed 's/\//./g' | sort -u | gzip -9 > out/cache.gz
+	;;
+build-lib)
+	name=${2:-common}
+	mkdir -p out/tmp/obj/$name
+	libs=''
+	if [ -f $name/depends ]
+	then
+		while IFS='' read -r line || [[ -n "$line" ]]; do
+			libs=${libs}lib/$line.jar:
+		done < $name/depends
+	fi
+	$CFG_JAVA_HOME/bin/javac \
+    	-d out/tmp/obj/$name \
+	    -classpath $libs$CFG_ANDROID_JAR \
+	    -sourcepath $name/src \
+	    `find $name/src/* -name *.java` && \
+	jar cf lib/$name.jar -C out/tmp/obj/$name .
+	;;
+build-res)
+	app=${2:-app}
+	$CFG_ANDROID_BUILD_TOOLS/aapt package -f -m \
+    -J $app/src \
+    -S $app/res \
+    -M $app/AndroidManifest.xml \
+    -I $CFG_ANDROID_JAR
+	;;
+compile)
+	app=${2:-app}
+	mkdir -p out/tmp/obj/$app
+	mkdir -p out/tmp/dex/$app
+	libs=''
+	if [ -f $app/depends ]
+	then
+		while IFS='' read -r line || [[ -n "$line" ]]; do
+			libs=${libs}lib/$line.jar:
+		done < $app/depends
+	fi
+	$CFG_JAVA_HOME/bin/javac \
+    	-d out/tmp/obj/$app \
+	    -classpath $libs$CFG_ANDROID_JAR \
+	    -sourcepath $app/src \
+	    `find $app/src/* -name *.java` && \
+	$CFG_ANDROID_BUILD_TOOLS/dx --dex \
+	    --output=out/tmp/dex/$app/classes.dex \
+	    out/tmp/obj/$app \
+	    lib
+	;;
+apk)
+	app=${2:-app}
+	mkdir -p out/tmp/apk/$app
+
+	$CFG_ANDROID_BUILD_TOOLS/aapt package -f \
+        -M $app/AndroidManifest.xml \
+        -S $app/res \
+        -I $CFG_ANDROID_JAR \
+        -F out/tmp/apk/$app/$app.unsigned.apk \
+        out/tmp/dex/$app
+	;;
+sign)
+	app=${2:-app}
+	$CFG_JAVA_HOME/bin/jarsigner \
+		-verbose \
+	    -sigalg SHA1withRSA \
+		-digestalg SHA1 \
+		-keystore AndroidApp.keystore \
+	    -storepass password \
+	    -keypass password \
+    	-signedjar out/tmp/apk/$app/$app.signed.apk \
+    	out/tmp/apk/$app/$app.unsigned.apk \
+    	-tsa $CFG_TSA \
+    	AndroidAppKey >/dev/null && \
+	$CFG_ANDROID_BUILD_TOOLS/zipalign -f 4 \
+    	out/tmp/apk/$app/$app.signed.apk \
+	    out/$app.apk
+	;;
+build)
+	app=${2:-app}
+	$0 build-res $app && \
+	$0 compile $app && \
+	$0 apk $app && \
+	$0 sign $app
+	;;
+install)
+	app=${2:-app}
+	$CFG_ANDROID_HOME/platform-tools/adb -d install out/$app.apk
+	;;
+uninstall)
+	app=${2:-app}
+	package=`cat $app/AndroidManifest.xml | sed -n 's/\s*package\s*=\s*"\([^"]\+\)"/\1/p'`
+	(>&2 echo $app package $package)
+	$CFG_ANDROID_HOME/platform-tools/adb uninstall $package
+	;;
+perm)
+	$CFG_ANDROID_HOME/platform-tools/adb shell pm list permissions -g
+	;;
+find-class)
+	if [ ! -f out/cache.gz ]
+	then
+		$0 make-cache
+	fi
+	class=$2
+	zcat out/cache.gz | grep -i ${class:-.}
+	;;
+show-class)
+	class=${2:-java.lang.Object}
+	libs=`ls -1 lib/*.jar | tr '\n' ':'`
+echo $libs$CFG_ANDROID_JAR
+	$CFG_JAVA_HOME/bin/javap -classpath $libs$CFG_ANDROID_JAR -public -constants $class
+	;;
+mount)
+	mkdir -p out/tmp
+	size=${2:-100M}
+	sudo mount -t tmpfs -o size=$size tmpfs out/tmp
+	;;
+remount)
+	size=${2:-100M}
+	sudo mount -o remount,size=$size out/tmp
+	;;
+umount)
+	sudo umount out/tmp
+	;;
+prepare)
+    sudo apt-get install lib32stdc++6 lib32z1 lib32z1-dev
+	;;
+*)
+	cat <<'TEXT'
+usage: ./ma cmd args
+
+main commands
+	build	build application
+	install install application on device
+	find-class	find full class name
+	show-class	show class public members
+	make-cache	create cache for class names
+	init-app	create application template
+	init-lib	create library template
+
+second group
+	init-keystore	create keys for signing apk
+	build-res	1st phase of build - make R.java from resources
+	compile	2nd phase of build - compile java files into dex file
+	apk	3rd phase of build - assemble apk file
+	sign	final 4th phase of build - sign apk file
+	prepare	install 32bit libs for aapt and zipalign
+
+notes:
+	library dependance must be in depends file
+	for example for apptest
+	[apptest/depends]
+	libdummy
+	libcommon
+	special-functions
+
+example:
+	./ma init-app test MyApp org.home.example
+	./ma build-lib mylib
+	./ma build test
+	./ma install test
+	./ma uninstall test
+	./ma find-class Intent | grep android
+	./ma find-class | grep \\.Intent\$
+	./ma show-class android.content.Intent | grep put | grep double
+	./ma show-class android.Manifest\$permission
+	./ma show-class android.Manifest\$permission_group
+	./ma show-class android.R\$attr | grep layout_
+
+links:
+	https://developer.android.com/reference
+TEXT
+	;;
+esac

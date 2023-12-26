@@ -1,0 +1,1 @@
+https://doc.qt.io/qtcreator/qtcreator-accelbubble-example.html
