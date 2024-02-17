@@ -42,5 +42,16 @@ public class MainActivity extends Activity {
 		toast.show(); 
 	  }
 	});
+
+	Button button2 = (Button) findViewById(R.id.button_id2);
+	button2.setOnClickListener(new View.OnClickListener() {
+	  public void onClick(View v) {
+		Toast toast = Toast.makeText(getApplicationContext(), 
+			"Нажата наша клавиша!", Toast.LENGTH_SHORT); 
+		toast.show(); 
+
+
+	  }
+	});
   }
 }
