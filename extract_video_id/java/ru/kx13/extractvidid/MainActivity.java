@@ -42,15 +42,16 @@ public class MainActivity extends Activity {
 		toast.show(); 
 	  }
 	});
-
+// Наша дополнительная кнопка и ее собщение
 	Button button2 = (Button) findViewById(R.id.button_id2);
 	button2.setOnClickListener(new View.OnClickListener() {
 	  public void onClick(View v) {
 		Toast toast = Toast.makeText(getApplicationContext(), 
-			"Нажата наша клавиша!", Toast.LENGTH_SHORT); 
+			R.string.btn2, Toast.LENGTH_SHORT); 
 		toast.show(); 
-
-
+	
+		TextView text = (TextView)findViewById(R.id.my_text);
+	        text.setText("Нажата нижняя клавиша!");
 	  }
 	});
   }

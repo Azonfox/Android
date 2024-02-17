@@ -1,4 +1,5 @@
 #!/bin/sh
+clear
 echo '0-start'
 SOURCE=ru/kx13/extractvidid
 BASE=/usr/lib
