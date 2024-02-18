@@ -18,15 +18,15 @@
 
 	  <Button
 		android:id="@+id/button_id"
-                android:background="@color/btn1"
+        android:background="@color/btn1"
 		android:layout_marginTop="50sp"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:text="Извлечь" />
 
-          <Button
+     <Button
 		android:id="@+id/button_id2"
-                android:background="@color/btn2"
+        android:background="@color/btn2"
 		android:layout_marginTop="50sp"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"

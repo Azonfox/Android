@@ -38,8 +38,11 @@ public class MainActivity extends Activity {
 		myClipboard.setPrimaryClip(myClip);
 
 		Toast toast = Toast.makeText(getApplicationContext(), 
-			video_id, Toast.LENGTH_SHORT); 
+			video_id, Toast.LENGTH_LONG); 
 		toast.show(); 
+		// Завершаем работу...?
+		finishAffinity();
+		System.exit(0);
 	  }
 	});
 // Наша дополнительная кнопка и ее собщение
