@@ -10,10 +10,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontStyle="italic"
-        android:fontFamily="@font/fsb"
-        android:textSize="25sp"
-        android:textColor="@color/textColor"
+        android:textSize="15sp"
+        android:textColor="#FFF"
         android:id="@+id/my_text"/>
 
 	<Button
@@ -38,16 +36,15 @@
 		android:layout_marginTop="20sp"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
-		android:text="BUT-Text" />
+		android:text="BUT-Text1" />
 
 	<Button
 		android:id="@+id/button4"
-		android:background="@color/btn2"
-		android:textColor="@color/readColor"
+		android:background="@color/btn1"
 		android:layout_marginTop="20sp"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
-		android:text="READ" />
+		android:text="BUT-Text2" />
 
 	<Button
 		android:id="@+id/button5"
