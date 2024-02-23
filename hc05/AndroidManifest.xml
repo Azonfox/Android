@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
-    <application android:label="EctractID" android:icon="@drawable/icon" >
+    <application android:label="Bluetooth HC05" android:icon="@drawable/icon" >
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

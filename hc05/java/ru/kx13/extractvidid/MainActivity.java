@@ -22,7 +22,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
   private static final String TAG = "bluetooth1";
 
-  Button button1, button2;//Указываем id наших кнопок
+  Button button1, button2, button3, button4;//Указываем id наших кнопок
   TextView text;
 
   private static final int REQUEST_ENABLE_BT = 1;
@@ -44,8 +44,10 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
     button1 = (Button) findViewById(R.id.button1); //Добавляем сюда имена наших кнопок
     button2 = (Button) findViewById(R.id.button2);
+    button3 = (Button) findViewById(R.id.button3);
+    button4 = (Button) findViewById(R.id.button4);
     text   = (TextView)findViewById(R.id.my_text);
-    text.setText("AZFOX Bluetooch HC-05");
+    text.setText("AZFOX Bluetooth HC-05");
 
     btAdapter = BluetoothAdapter.getDefaultAdapter();
     checkBTState();
@@ -55,18 +57,40 @@ public class MainActivity extends Activity {
       public void onClick(View v)
       {
         sendData("1");         // Посылаем цифру 1 по bluetooth
-        Toast.makeText(getBaseContext(), "Включаем LED", Toast.LENGTH_SHORT).show();  //выводим на устройстве сообщение
+        Toast.makeText(getBaseContext(), "Отправка 1", Toast.LENGTH_SHORT).show(); //выводим сообщение
       }
     });
 
     button2.setOnClickListener(new OnClickListener() {
       public void onClick(View v)
         {
-        sendData("0"); // Посылаем цифру 1 по bluetooth
-        Toast.makeText(getBaseContext(), "Выключаем LED", Toast.LENGTH_SHORT).show();
+        sendData("2"); // Посылаем цифру 2 по bluetooth
+        Toast.makeText(getBaseContext(), "Отправка 2", Toast.LENGTH_SHORT).show();
       }
     });
-  }
+
+    button3.setOnClickListener(new OnClickListener() {
+      public void onClick(View v)
+        {
+        sendData(" AzonFox!!! "); // Посылаем текст по bluetooth
+        Toast.makeText(getBaseContext(), "Отправка текста", Toast.LENGTH_SHORT).show();
+      }
+    });
+
+   button4.setOnClickListener(new OnClickListener() {
+      public void onClick(View v)
+        {
+  		// Завершаем работу
+        sendData(" Exit Application! "); // Посылаем текст по bluetooth
+        Toast.makeText(getBaseContext(), "Завершаем работу", Toast.LENGTH_SHORT).show();
+		finishAffinity();
+		System.exit(0);
+      }
+    });
+
+}
+
+
 
   @Override
   public void onResume() {
@@ -153,7 +177,7 @@ public class MainActivity extends Activity {
 
   private void errorExit(String title, String message){
     Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
-//    finish();
+    finish();
   }
 
   private void sendData(String message) {
