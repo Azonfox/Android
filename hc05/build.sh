@@ -35,7 +35,7 @@ echo '6----'
 
 apksigner sign --ks keystore.jks \
         --ks-key-alias androidkey --ks-pass pass:android \
-		--key-pass pass:android --out build/Extractor.apk \
+		--key-pass pass:android --out build/HC05.apk \
 		 build/Extractor.aligned.apk
 
 echo '7-end'

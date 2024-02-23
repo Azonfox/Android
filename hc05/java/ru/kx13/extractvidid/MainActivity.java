@@ -22,7 +22,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
   private static final String TAG = "bluetooth1";
 
-  Button button1, button2, button3, button4;//Указываем id наших кнопок
+  Button button1, button2, button3, button4, button5;//Указываем id наших кнопок
   TextView text;
 
   private static final int REQUEST_ENABLE_BT = 1;
@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
     button2 = (Button) findViewById(R.id.button2);
     button3 = (Button) findViewById(R.id.button3);
     button4 = (Button) findViewById(R.id.button4);
+    button5 = (Button) findViewById(R.id.button5);
     text   = (TextView)findViewById(R.id.my_text);
     text.setText("AZFOX Bluetooth HC-05");
 
@@ -77,7 +78,15 @@ public class MainActivity extends Activity {
       }
     });
 
-   button4.setOnClickListener(new OnClickListener() {
+    button4.setOnClickListener(new OnClickListener() {
+      public void onClick(View v)
+        {
+        sendData(" READ-??? "); // Посылаем текст по bluetooth
+        Toast.makeText(getBaseContext(), "Прием текста", Toast.LENGTH_SHORT).show();
+      }
+    });
+
+   button5.setOnClickListener(new OnClickListener() {
       public void onClick(View v)
         {
   		// Завершаем работу

@@ -3,5 +3,7 @@
     <color name="bgwin">#6200EE</color>
     <color name="textColor">#0FF</color>
     <color name="btn1">#0F0</color>
-    <color name="btn2">#F00</color>
+    <color name="btn2">#00F</color>
+    <color name="btn5">#F00</color>
+    <color name="readColor">#FFF</color>
 </resources>
