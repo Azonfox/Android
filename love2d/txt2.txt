@@ -1,0 +1,67 @@
+﻿Отлично, начнем с простого способа — встроим game.love в готовый LÖVE APK.
+
+1. Скачай LÖVE APK
+
+Перейди на GitHub LÖVE Android.
+
+Скачай love-11.4-android.apk (или последнюю версию).
+
+
+2. Подготовь свой .love-файл
+
+Убедись, что игра работает через LÖVE на Android.
+
+Переименуй свой .love-файл в game.love.
+
+
+3. Вставь game.love в APK
+
+APK — это обычный ZIP-архив, его можно редактировать.
+
+Способ 1: Через командную строку (zip)
+
+В терминале (Linux/macOS):
+
+cp game.love love.apk
+zip -u love.apk game.love
+
+В Windows можно использовать WinRAR:
+
+1. Открой love.apk с помощью WinRAR.
+
+
+2. Добавь game.love в корень архива.
+
+
+3. Закрой архив (НЕ распаковывай его).
+
+
+
+4. Подписать APK (Android требует подписи)
+
+Без подписи Android не даст установить APK.
+
+Создание подписи (если ее нет)
+
+keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-key
+
+Придется ввести пароль, имя и т. д. — запомни их.
+
+Подпись APK
+
+zipalign -v 4 love.apk game-aligned.apk
+apksigner sign --ks my-release-key.jks --out game-signed.apk game-aligned.apk
+
+5. Установи APK на телефон
+
+adb install game-signed.apk
+
+Или просто передай файл на телефон и установи вручную.
+
+
+---
+
+После этого при запуске APK твоя игра должна запускаться сразу, без выбора .love!
+
+Попробуй и скажи, если где-то застрял!
+
